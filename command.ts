@@ -37,6 +37,7 @@ import type {
   XReadOpts,
   XReadReply,
 } from "./stream.ts";
+import type { RedisMonitor } from "./monitor.ts";
 
 export type ACLLogMode = "RESET";
 type BitopOperation = "AND" | "OR" | "XOR" | "NOT";
@@ -1287,7 +1288,7 @@ XRANGE somestream - +
   moduleList(): Promise<BulkString[]>;
   moduleLoad(path: string, ...args: string[]): Promise<SimpleString>;
   moduleUnload(name: string): Promise<SimpleString>;
-  monitor(): void;
+  monitor(): Promise<RedisMonitor>;
   replicaof(host: string, port: number): Promise<SimpleString>;
   replicaofNoOne(): Promise<SimpleString>;
   role(): Promise<RoleReply>;

@@ -104,6 +104,7 @@ import {
   rawstr,
   xidstr,
 } from "./stream.ts";
+import { RedisMonitorImpl } from "./monitor.ts";
 
 const binaryCommandOptions = {
   returnUint8Arrays: true,
@@ -1116,8 +1117,13 @@ class RedisImpl implements Redis {
     return this.execStatusReply("MODULE", "UNLOAD", name);
   }
 
-  monitor() {
-    throw new Error("not supported yet");
+  async monitor() {
+    const connection = this.executor.connection.duplicate();
+    await connection.connect();
+    const executor = new DefaultExecutor(connection);
+    await executor.sendCommand("MONITOR", [], { inline: true });
+
+    return new RedisMonitorImpl(executor);
   }
 
   move(key: string, db: string) {

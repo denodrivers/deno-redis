@@ -83,6 +83,7 @@ export type {
   SimpleString,
 } from "./protocol/shared/types.ts";
 export type { RedisPubSubMessage, RedisSubscription } from "./pubsub.ts";
+export type { RedisMonitor, RedisMonitorLog } from "./monitor.ts";
 export type { Redis, RedisConnectOptions } from "./redis.ts";
 export type {
   StartEndCount,
